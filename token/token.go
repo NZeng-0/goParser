@@ -1,15 +1,20 @@
 package token
 
-type TokenType string
+type Type string
 
 type Token struct {
-	Type    TokenType
+	Type    Type
 	Literal string
 }
 
-var keywords = map[string]TokenType{
-	"fn":  FUNCTION,
-	"let": LET,
+var keywords = map[string]Type{
+	"fn":     FUNCTION,
+	"let":    LET,
+	"true":   TRUE,
+	"false":  FALSE,
+	"if":     IF,
+	"else":   ELSE,
+	"return": RETURN,
 }
 
 const (
@@ -17,8 +22,9 @@ const (
 	EOF     = "EOF"
 
 	// 标识符+字面量
-	IDENT = "IDENT" // add, foobar, x, y, ...
-	INT   = "INT"   // 1343456
+	IDENT  = "IDENT" // add, foobar, x, y, ...
+	INT    = "INT"   // 1343456
+	STRING = "STRING"
 
 	// 运算符
 	ASSIGN   = "="
@@ -40,15 +46,23 @@ const (
 	LBRACE = "{"
 	RBRACE = "}"
 
+	LBRACKET = "["
+	RBRACKET = "]"
+
 	// 关键字
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
+	TRUE     = "TRUE"
+	FALSE    = "FALSE"
+	IF       = "IF"
+	ELSE     = "ELSE"
+	RETURN   = "RETURN"
 
 	EQ     = "=="
 	NOT_EQ = "!="
 )
 
-func LookupIdent(ident string) TokenType {
+func LookupIdent(ident string) Type {
 	if tok, ok := keywords[ident]; ok {
 		return tok
 	}
